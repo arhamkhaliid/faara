@@ -1,0 +1,188 @@
+FAARA.EXE
+FINAL BUILD BLUEPRINT
+A personal, playful birthday experience built with Google Antigravity
+THE GOAL  A beautiful, funny, interactive birthday website that feels made specifically for Faara. Keep the original creative vision, but build it in a practical, free-first way: a consistent character, a memorable cake interaction, thoughtful copy, and a warm ending.
+Single page · Mobile-first · No backend · No paid dependencies required
+1. The vision
+Faara is launching her own tiny operating system: FAARA.EXE. The system is overconfident, slightly incompetent, and trying a little too hard to make her birthday special. It jokes, glitches, and gets in its own way—but underneath the humour, the experience is thoughtful and kind.
+The website should feel like one connected little world, not a collection of unrelated screens. The system’s voice handles the jokes. The final birthday note drops the interface and sounds like a real person talking to her.
+DESIGN PRINCIPLE  The experience should feel special because of its timing, details and personal touches—not because every feature uses the most complicated technology.
+The tone rules
+Two distinct voices: the system is deadpan, playful and slightly wrong; the final message is warm, direct and natural.
+Keep the running gag about “we” and “the team”. Set it up in the opening and pay it off in the final crash gag.
+Every scene has one job: opening = first laugh; surprise = teasing with one warm moment; certificate = official-looking silliness; cake = play; final note = sincerity; crash = comic release.
+Do not repeat the same joke or emotional beat unnecessarily. Timing and pauses matter.
+Keep affection understated. No confession, relationship implication, future promises, or pressure for a particular response.
+Do not invent personal details. Verify personal references before they go into the final build.
+2. Practical build decisions
+This is the final scope for the first complete version. Advanced effects are optional polish, not requirements that can block the website from being finished.
+Area
+Build first
+Optional later
+Character
+One approved master illustration with gentle floating, breathing-style motion, fades and small bounces.
+Layered face parts, detailed eye tracking, hair sway and six fully coordinated expressions.
+Cake
+A beautiful Oreo cake with candles, wish moment, button-based blow-out, slice reveal and confetti.
+Rotatable real 3D cake, detailed shaders and microphone breath detection.
+Depth
+Layered backgrounds, soft glow, CSS transforms and pointer/touch parallax.
+Phone gyroscope/tilt permissions and complex depth effects.
+Sound
+A few short optional effects and a visible mute control; the site works silently.
+Full sound pass and vibration polish.
+Certificate
+Readable certificate, signing canvas, “Sign for me” fallback and save/share attempt.
+Perfect image export across every browser if it takes disproportionate effort.
+Particles
+Lightweight sparkles and confetti.
+Complex custom 3D particle system.
+FREE-FIRST RULE  Use free libraries and free static hosting. Do not require a paid API, subscription, paid animation service or backend. If an advanced feature becomes a time sink, use its fallback and keep moving.
+3. Technology and structure
+Framework: Vite + React + TypeScript.
+Animation: CSS transitions/animations first; GSAP for scene choreography where it genuinely helps.
+3D: React Three Fiber / Three.js only if Antigravity can make the cake stable without slowing the rest of the build. A polished 2D/layered cake is an approved fallback.
+Sound: Web Audio API or small local sound assets; unlock only after the first tap.
+Hosting: free static hosting such as GitHub Pages, Netlify or Vercel, subject to their current free-tier limits.
+No backend, database, login, analytics or persistent personal data.
+Keep all website copy in one editable file, such as copy.ts. Do not reword approved copy unless asked.
+Use one scene manager/state machine. No router or full page reloads between scenes.
+Recommended scene flow: Boot Gate → Opening → Control Room → Surprise / Certificate / Cake → Final Message → Fake Crash → Replay options.
+The surprise, certificate and cake should be accessible in any order. The cake can lead to the final message, which should still offer a clear route back to the other modules.
+4. Scene 0 — Boot Gate
+A near-black screen with one blinking line:
+ON SCREEN  FAARA.EXE ready. Tap to start.
+After the tap, show a short boot sequence (about 1.5–2 seconds). The tap unlocks optional audio. Never make the user wait through a long loading screen; allow the boot sequence to be skipped.
+Starting FAARA.EXE…
+Loading birthday protocol 22… done.
+Loading everything else… mostly done.
+A loading bar briefly stalls at 99%, then jumps to 100%. The character appears at the end. Sound is optional and can be muted.
+5. Scene 1 — Opening
+Background: deep plum and midnight charcoal, with restrained pink/lavender glow and a few subtle floating particles. The approved character illustration enters with a gentle rise and settles into a soft idle motion.
+PRESERVE THIS OPENING EXACTLY  Oh. You're here.We've been preparing something for you. Unfortunately, the team is slightly incompetent.— FAARA.EXE System Status: Questionable
+Delivery: show “Oh. You're here.” first, then pause for about 1.4 seconds. Reveal the rest in timed beats. The status light turns amber on “Questionable”. Keep the original wording; only the pacing and layout change.
+Buttons:
+“Let's see” → “Correct choice. Please keep doing that. The team is already very nervous.”
+“Who is 'we'?” → “The team.” … “The slightly incompetent one. We covered this.” … “Please do not ask for names.”
+Both paths lead to the same transition: “Anyway. Opening the Control Room…” followed by a short progress animation. Target roughly 10–12 seconds from the first tap to the opening buttons, but never sacrifice usability for exact timing.
+6. Scene 2 — Control Room
+A floating, 3D-feeling space with the character in the centre and three clearly tappable modules: Open Surprise, Official Certificate, and Cut the Cake. Use layered cards, soft glow and gentle motion rather than requiring real 3D for the whole hub.
+HUB LINE  Control Room online. Pick any.
+Modules can be opened in any order. Mark a completed module with a subtle glow. Provide a visible Back to Control Room option within each module. The interface must work with touch and mouse; gyroscope/tilt is not required.
+A. Open Surprise
+Start with a fake notification: “PERSONALIZED SURPRISE DETECTED.” Offer two choices:
+“That sounds suspicious.” → “Correct instincts. Proceeding anyway.”
+“Show me.” → “Brave. Proceeding.”
+Then show four pop-ups, one at a time. Each stays until she dismisses it. Do not stack notifications.
+Joke: “Birthday reminder: today is all about you. We checked. Then the team checked again, just to be sure.”
+Joke, then a brief character break: “A completely normal amount of effort has gone into this.” Pause, then: “Okay, fine. A lot of effort. Please just enjoy it and do not ask how long it took.”
+Warm turn: thank her for listening to an unreasonable amount of nonsense. Use the exact phrase “You can do it. I’m with you.” only if that is confirmed as her real wording. The Close button dodges once, then reads “Fine. Close.”
+Deflection: after a short typing pause, “Anyway, no big speech. Aaj ka birthday achhe se guzre.”
+Keep this module light and brief—around 20 seconds if she reads at a normal pace. The close-button dodge happens only once.
+B. Official Certificate
+A formal-looking certificate card with a subtle foil sheen. Do not make phone tilt a requirement. The signature can be drawn with a finger, with a “Sign for me” fallback.
+Header: “FAARA.EXE — CERTIFICATION DEPARTMENT”
+Small print: “Form BD-22 · Birthday Division · Approved by the team (we think)”
+Title: “CERTIFICATE OF BEING A GENUINELY LOVELY HUMAN”
+Body: “This certificate is presented to Faara for being the kind of person whose presence makes ordinary days a little better. For the laughs, the little moments, the random gossip, and for being unapologetically herself. No further evidence required.”
+Qualification: “Officially certified: one of the best people to have around.”
+Validity: “Lifetime. No renewal needed.”
+Issued by: “Someone who thinks you deserve a really lovely birthday.”
+Signature small print: “By signing, you accept this certificate and agree to have a good birthday. Terms are not negotiable.”
+Stamp: “APPROVED. NO APPEALS.”
+After signing or selecting “Sign for me”, slam down the stamp with a short visual shake and optional thud. Add “Download keepsake”. Try to save/share an image locally; if a browser blocks download, open the image so she can save it manually. Do not let export problems block the certificate itself.
+C. Cut the Cake
+This is the main playful moment. Show a chocolate Oreo cake: dark sponge, white cream layers with cookie pieces, crushed Oreo crumbs and whole cookies around the edge. The number candles are 2 and 2.
+Build the interaction in this order:
+The cake enters with warm golden lighting. If stable 3D rotation is straightforward, include it. Otherwise use a polished layered 2D cake with convincing depth.
+Light both candles with a simple drag or by tapping each candle. Both options must work.
+Wish moment: “Make a wish.” Pause briefly, then show “Blow into the microphone.” Only ask for microphone permission at this moment, explain that no audio is recorded, and analyse sound only. Stop the microphone as soon as the candles go out.
+A prominent “Blow” button must always be available as a fallback. If permission is denied, the microphone fails, or detection is unreliable, use the button immediately.
+Show a dotted cut line and let her drag a knife across it. If dragging is awkward or fails twice, a tap should perform the cut. The slice slides out and reveals the cake layers.
+Confetti and sparkles burst; the character gives a small celebratory bounce. Then show: “Cake cut successfully. It is the first thing the team has got right today.”
+Bridge to final note: “Okay. One more thing. No jokes this time.” Button: “Go on, then.” If she has already opened the surprise module, the alternate line may be: “Small update: there is a speech after all. It is short, and there are no jokes.” Use the alternate only if the module was actually opened.
+FALLBACK RULE  The cake must be finishable without a microphone, precise drag, gyroscope or WebGL. The experience should still feel intentional if the simplified version is used.
+7. Scene 4 — Final birthday message
+Let the energy settle. The background becomes a calm, dark plum sky with a few stars and softly rising lantern-like particles. The system interface disappears completely. The character stays relaxed and still; the message uses warm cream serif text, revealed paragraph by paragraph. No typing effect and no jokes in this section.
+The note should sound like me talking to her—not like a formal greeting card. Keep it simple, personal, warm and a little understated. Use the following as the first-person draft:
+FINAL MESSAGE — COPY FOR THE WEBSITE  Faara,Honestly, talking to you is always fun. Even when we're talking about the most random things, somehow the conversation ends up being entertaining. I don't think I have a better way of explaining it than that.I hope this year brings you a lot of good days, good people, and plans that turn into memories you'll keep laughing about later. I hope the things you're working towards work out for you, and even on ordinary days, something small happens that makes you happy.Bas, that's pretty much it. I just hope you have a genuinely good birthday, get to do things you enjoy, and have at least one moment today that makes you smile properly.Happy Birthday, Faara. ❤️
+This is deliberately not a confession and does not imply a relationship. It should read like a thoughtful message from someone who genuinely enjoys her company. If a real, specific shared memory naturally fits, add one short sentence after the first paragraph—but do not force it. The message works without that extra line.
+Reveal each paragraph for about 3–4 seconds, with tap-to-continue available. Do not force her to wait if she wants to move on. Let the final line sit for about 3 seconds before the last button appears.
+8. Final gag — Fake crash and reboot
+After the sincere note, show the button “One last thing…”. The message fades, the screen briefly glitches, and a fake in-world window appears:
+FAKE SYSTEM WINDOW  FAARA.EXE has stopped responding
+Hold a short silent pause (about 2 seconds). The character gives the window a side-eye. The system returns:
+“Error: too much birthday emotion detected.”
+“Restarting with unnecessary confidence…”
+The progress bar jumps straight to 100%.
+“Okay, bye now. We have made this weird enough.”
+The crash is theatre only. The page must stay responsive and recover automatically. Never use a real browser alert, freeze the page, or leave a blank screen. End with two buttons: “Replay cake” and “Back to Control Room”. Replaying the cake resets that scene.
+9. 
+10. Character plan — simple first, detailed only if easy
+Use the original approved character image as the master asset. The face and overall likeness matter more than having many animated expressions. A generated character sheet is a visual reference, not a rig and not a guarantee that Antigravity can reconstruct the character accurately.
+First version: one consistent transparent character image, with gentle floating, subtle scale/breathing-style motion, fade-ins, small bounces and smooth movement between scenes.
+Use the same character image throughout; do not swap to inconsistent AI-generated versions.
+If needed, create only a few extra approved expression images (for example happy, surprised and celebratory) using the original image as the reference. Skip them if likeness drifts.
+Do not spend time splitting every body part into layers or rigging the character unless the simple version is already working and there is time left.
+Avoid rotating the entire character image to imitate a head tilt; that tilts the whole body. Use the original pose or a separately prepared head layer if a head movement is genuinely needed.
+11. Visual design and sound
+Palette: deep plum / midnight charcoal, blush pink, lavender, warm cream and restrained gold.
+System voice: clean monospace in lavender. Final note and certificate: warm serif. Use a display face for headings and a handwriting style only for the certificate signature.
+Glows should be soft, not harsh. Use translucent system windows and thin glowing borders.
+Motion should have consistent easing. Nothing should bounce without a reason.
+Brightness arc: dark and cool opening → floating magical hub → warm golden cake → calm starry final scene.
+Sound is optional and muted by default until the first tap. Keep a visible mute button. No looping music is required.
+All jokes and interactions must work with sound off. Add a few short effects only after the main flow works.
+Vibration is optional and supported only where the device/browser allows it.
+12. Mobile, accessibility and reliability
+Mobile-first, tested at about 390 px wide. Use large touch targets (around 48 px or more) and no hover-only interactions.
+First screen should appear quickly. Load the 3D cake only when needed, and do not let its loading block the rest of the website.
+Compress images and sound. Keep particles and shadows modest; reduce effects on slower devices.
+Respect reduced-motion settings. Replace large movements with simple fades while keeping every scene usable.
+Ask for microphone or motion permission only when needed, with a clear explanation and an easy skip.
+Every interaction has a fallback: microphone → button; drag cut → tap; tilt → simple parallax; sound → silent mode; 3D cake → layered 2D cake.
+Provide visible ways to go back or continue. Prevent double taps from triggering overlapping transitions.
+Clean up animations, event listeners, audio and 3D resources when leaving a scene. Pause effects when the page is in the background.
+Use mobile-safe viewport sizing and respect notches/safe areas. The layout must survive portrait/landscape changes.
+The fake crash must never be mistaken for a real crash; keep it brief and recover automatically.
+13. Build order in Antigravity
+Build in milestones. Do not paste the entire blueprint as one giant request and expect every detail to be perfect on the first try. Run the project after each milestone and fix major issues before moving on.
+Skeleton: Vite + React + TypeScript, scene state machine, mobile layout, palette, and one copy.ts file for all text.
+Complete rough flow: boot, opening, hub, surprise, certificate, cake, final note and crash. Use placeholder visuals if necessary. No scene may be missing.
+Character: add the approved master image and simple motion. Do not begin with a complex rig.
+Opening and hub: implement the exact opening copy, button replies, three modules and navigation.
+Surprise and certificate: build readable pop-ups, one-time close-button dodge, signature fallback, stamp and best-effort image saving.
+Cake: complete the candle, wish, blow-button, cut and celebration interactions. Attempt 3D only if stable; otherwise use the 2D fallback.
+Final note and crash gag: implement the exact approved copy, calm visual transition and automatic recovery.
+Polish: add restrained sound, particles, visual depth and any optional Easter egg only if time remains.
+Test the complete flow on a real phone, then fix usability issues before adding new features.
+SCOPE CONTROL  If a feature is still unstable after a reasonable attempt, use the fallback and move to the next milestone. Do not let one ambitious animation prevent the whole birthday experience from being finished.
+14. Definition of done
+The opening joke appears exactly as approved.
+All scenes work end to end and modules can be opened in any order.
+The same approved character image is used throughout, with simple, smooth motion.
+The surprise module is readable and pop-ups do not stack.
+The certificate can be signed or approved with “Sign for me”; saving is attempted with a manual fallback.
+The cake can be completed without microphone permission or precise dragging.
+The final message feels natural, personal and not overly romantic.
+The fake crash is clearly fictional, stays responsive and recovers automatically.
+The site works with sound off and reduced motion enabled.
+There are no paid dependencies, backend, login or analytics.
+No unverified personal detail has been included.
+The website has been tested on a real phone and no scene leaves her stuck.
+15. Personal details to verify before launch
+Confirm the character image is the exact one you want to use.
+Confirm Faara's birthday age and the number candles are correct.
+Confirm the exact quote used in the warm surprise pop-up before attributing it to her.
+Verify each travel detail before adding the airplane Easter egg.
+Add a real shared memory to the final note only if it fits naturally and is accurate.
+Read every line once as if you were actually saying it to her. If a line sounds too formal, too romantic or unlike you, simplify it.
+16. Master prompt for Google Antigravity
+Build FAARA.EXE as a single-page, mobile-first birthday experience using Vite + React + TypeScript. Keep it free-first: no paid APIs, backend, database, login or analytics. Use CSS animations for simple motion and GSAP where helpful. Use React Three Fiber/Three.js for a 3D cake only if it can be implemented reliably; otherwise use a polished layered 2D cake with the same interactions.
+Concept: a funny, slightly incompetent birthday operating system built specifically for Faara. The system voice is deadpan and playful; the final birthday note is warm and natural. Preserve the opening joke and all approved copy exactly. Store every line in one editable copy.ts file. Do not invent personal details.
+Scenes: (1) Boot Gate with “FAARA.EXE ready. Tap to start.” and a short skippable boot sequence. (2) Opening with “Oh. You're here.” followed by the original team joke and the buttons “Let's see” and “Who is 'we'?”. (3) Control Room with three modules: Open Surprise, Official Certificate, Cut the Cake. The modules may be opened in any order. (4) Surprise with four one-at-a-time pop-ups, including the one-time dodging Close button. (5) Certificate with the approved text, finger signature, “Sign for me” fallback, stamp and best-effort save/share. (6) Cake with Oreo visuals, two number candles, wish moment, microphone blow only as an optional enhancement, prominent Blow button fallback, cake-cut drag with tap fallback, slice reveal and confetti. (7) Calm final scene with the birthday note below. (8) Fake crash/reboot gag that stays responsive and recovers automatically.
+Character: use the approved original illustration as one master image. Start with gentle floating, breathing-style motion, fade-ins, small bounces and scene transitions. Do not build a complex layered rig or regenerate the face unless the simple version is complete and stable. Keep the same character consistent.
+Visuals: deep plum/midnight charcoal, blush pink, lavender, warm cream and restrained gold. Use subtle depth, soft glow, readable type and restrained particles. Make it mobile-first, accessible, and usable with sound off. Respect reduced motion. Add fallbacks for microphone, drag, tilt, WebGL and export. No interaction may leave the user stuck.
+Build in milestones and run the app after each one. First deliver a complete working flow with placeholder art. Then integrate the final character and polish the opening, cake and final note. If an advanced feature takes too long or is unstable, use the fallback rather than blocking completion.
+Approved final message
+Faara,Honestly, talking to you is always fun. Even when we're talking about the most random things, somehow the conversation ends up being entertaining. I don't think I have a better way of explaining it than that.I hope this year brings you a lot of good days, good people, and plans that turn into memories you'll keep laughing about later. I hope the things you're working towards work out for you, and even on ordinary days, something small happens that makes you happy.Bas, that's pretty much it. I just hope you have a genuinely good birthday, get to do things you enjoy, and have at least one moment today that makes you smile properly.Happy Birthday, Faara. ❤️
