@@ -20,8 +20,8 @@ export const GLBCake3D: React.FC<OreoCake3DProps> = ({
   reducedMotion = false,
 }) => {
   // Load both GLB assets from public/models
-  const intactGltf = useLoader(GLTFLoader, '/models/birthday_cake_intact.glb');
-  const cutGltf = useLoader(GLTFLoader, '/models/birthday_cake_cut.glb');
+  const intactGltf = useLoader(GLTFLoader, `${import.meta.env.BASE_URL}models/birthday_cake_intact.glb`);
+  const cutGltf = useLoader(GLTFLoader, `${import.meta.env.BASE_URL}models/birthday_cake_cut.glb`);
 
   // Clone scenes to isolate instances from loader cache, and hide stray board curl
   const intactScene = useMemo(() => {

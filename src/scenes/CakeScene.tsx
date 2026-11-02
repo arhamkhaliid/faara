@@ -460,7 +460,7 @@ export const CakeScene: React.FC<CakeSceneProps> = ({
         {/* Full-Screen Classical Sunset Garden Terrace Chamber Backdrop */}
         <div className="cake-chamber-backdrop" aria-hidden="true">
           <img
-            src="/environment/cake_chamber_bg.jpg"
+            src={`${import.meta.env.BASE_URL}environment/cake_chamber_bg.jpg`}
             alt=""
             className="cake-chamber-backdrop-img"
             draggable={false}

@@ -996,7 +996,8 @@ export function WorldEnvironment({ reducedMotion = false }: WorldEnvironmentProp
   } = useMemo(() => {
     const loader = new THREE.TextureLoader();
     const loadTex = (url: string) => {
-      const tex = loader.load(url);
+      const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+      const tex = loader.load(`${import.meta.env.BASE_URL}${cleanUrl}`);
       tex.colorSpace = THREE.SRGBColorSpace;
       return tex;
     };

@@ -10,7 +10,7 @@ type SurpriseStage =
   | 'turning'     // 3D paper page turn
   | 'revealed';   // State D: Final high-resolution newspaper reveal with zoom & controls
 
-const FINAL_IMAGE_SRC = '/images/faara-birthday-newspaper.png';
+const FINAL_IMAGE_SRC = `${import.meta.env.BASE_URL}images/faara-birthday-newspaper.png`;
 
 export const SurpriseScene: React.FC<SceneProps> = ({ onNavigate }) => {
   const [stage, setStage] = useState<SurpriseStage>(() => {

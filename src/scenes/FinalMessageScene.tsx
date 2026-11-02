@@ -144,7 +144,7 @@ export const FinalMessageScene: React.FC<SceneProps> = ({ onNavigate }) => {
           ======================================================== */}
       <div className="final-terrace-backdrop" aria-hidden="true">
         <img
-          src="/environment/final_terrace_bg.jpg"
+          src={`${import.meta.env.BASE_URL}environment/final_terrace_bg.jpg`}
           alt=""
           className="final-terrace-img"
           loading="eager"

@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/faara/',
   plugins: [react()],
   build: {
     chunkSizeWarningLimit: 1200,
