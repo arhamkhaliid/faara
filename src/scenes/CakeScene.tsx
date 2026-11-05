@@ -53,6 +53,7 @@ export const CakeScene: React.FC<CakeSceneProps> = ({
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animFrameRef = useRef<number | null>(null);
+  const blowOutTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // -------------------------------------------------------------
   // Stage A: Candle Lighting Handler
@@ -60,26 +61,16 @@ export const CakeScene: React.FC<CakeSceneProps> = ({
   const handleLightCandle = useCallback(
     (index: 0 | 1) => {
       if (stage !== 'lighting') return;
+      // Unlock audio context on direct user interaction for seamless celebration playback
+      celebrationAudio.unlock();
 
       if (index === 0) {
         setCandle1Lit(true);
-        if (candle2Lit) {
-          setTimeout(() => {
-            setWishCountdown(10);
-            setStage('wish');
-          }, 600);
-        }
       } else if (index === 1) {
         setCandle2Lit(true);
-        if (candle1Lit) {
-          setTimeout(() => {
-            setWishCountdown(10);
-            setStage('wish');
-          }, 600);
-        }
       }
     },
-    [stage, candle1Lit, candle2Lit]
+    [stage]
   );
 
   // Check if both candles are lit to trigger transition to Stage B
@@ -132,9 +123,13 @@ export const CakeScene: React.FC<CakeSceneProps> = ({
     setIsMicActive(false);
   }, []);
 
-  // Always clean up mic and celebration audio when unmounting
+  // Always clean up mic, blow-out timer, and celebration audio when unmounting
   useEffect(() => {
     return () => {
+      if (blowOutTimerRef.current) {
+        clearTimeout(blowOutTimerRef.current);
+        blowOutTimerRef.current = null;
+      }
       stopMicrophone();
       celebrationAudio.stop();
     };
@@ -143,12 +138,17 @@ export const CakeScene: React.FC<CakeSceneProps> = ({
   // Handle extinguishing both candles (blown out via mic or button)
   const handleBlowOut = useCallback(() => {
     if (isBlownOut) return;
+    celebrationAudio.unlock();
     setIsBlownOut(true);
     stopMicrophone();
 
-    // Transition smoothly into cutting stage
-    setTimeout(() => {
+    // Transition smoothly into cutting stage with cleanable timer
+    if (blowOutTimerRef.current) {
+      clearTimeout(blowOutTimerRef.current);
+    }
+    blowOutTimerRef.current = setTimeout(() => {
       setStage('cutting');
+      blowOutTimerRef.current = null;
     }, 1300);
   }, [isBlownOut, stopMicrophone]);
 
@@ -240,9 +240,18 @@ export const CakeScene: React.FC<CakeSceneProps> = ({
     setCelebrationStep('success');
   }, [isCut]);
 
-  // Pointer drag along cut line
+  // Pointer drag along cut line with robust pointer capture & cancellation
   const handleCutPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (stage !== 'cutting' || isCut) return;
+    // Unlock Web Audio context directly from pointerdown user activation
+    celebrationAudio.unlock();
+
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // Safe fallback if pointer capture is not supported
+    }
+
     isDraggingKnife.current = true;
     dragStartX.current = e.clientX;
     dragStartY.current = e.clientY;
@@ -258,17 +267,35 @@ export const CakeScene: React.FC<CakeSceneProps> = ({
 
     if (progress >= 65) {
       isDraggingKnife.current = false;
+      if (e.currentTarget?.hasPointerCapture?.(e.pointerId)) {
+        try {
+          e.currentTarget.releasePointerCapture(e.pointerId);
+        } catch {
+          // Safe fallback
+        }
+      }
       executeCakeCut();
     }
   };
 
-  const handleCutPointerUp = () => {
+  const handleCutPointerUp = (e?: React.PointerEvent<HTMLDivElement>) => {
+    if (e?.currentTarget?.hasPointerCapture?.(e.pointerId)) {
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch {
+        // Safe fallback
+      }
+    }
     if (isDraggingKnife.current) {
       isDraggingKnife.current = false;
       if (dragProgress < 65) {
         setDragProgress(0);
       }
     }
+  };
+
+  const handleCutPointerCancel = (e?: React.PointerEvent<HTMLDivElement>) => {
+    handleCutPointerUp(e);
   };
 
   // -------------------------------------------------------------
@@ -481,6 +508,7 @@ export const CakeScene: React.FC<CakeSceneProps> = ({
             onCanvasPointerDown={handleCutPointerDown}
             onCanvasPointerMove={handleCutPointerMove}
             onCanvasPointerUp={handleCutPointerUp}
+            onCanvasPointerCancel={handleCutPointerCancel}
           />
         ) : (
           <CakeFallback2D

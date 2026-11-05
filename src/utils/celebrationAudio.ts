@@ -19,6 +19,28 @@ class CelebrationAudioEngine {
     }
   }
 
+  /**
+   * Unlock or resume AudioContext from a direct user interaction.
+   * Ensures mobile Safari and Chrome allow audio playback when the cut completes.
+   */
+  public unlock() {
+    try {
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (!AudioCtx) return;
+
+      if (!this.ctx || this.ctx.state === 'closed') {
+        this.ctx = new AudioCtx();
+      }
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume().catch(() => {});
+      }
+    } catch {
+      // Audio unlock is non-blocking and fail-safe
+    }
+  }
+
   public stop() {
     if (this.cleanupTimeout) {
       window.clearTimeout(this.cleanupTimeout);
@@ -45,7 +67,19 @@ class CelebrationAudioEngine {
   }
 
   public playCelebration(isMutedInitial: boolean = false) {
-    this.stop();
+    if (this.cleanupTimeout) {
+      window.clearTimeout(this.cleanupTimeout);
+      this.cleanupTimeout = null;
+    }
+    this.activeOscillators.forEach((osc) => {
+      try {
+        osc.stop();
+        osc.disconnect();
+      } catch {
+        // Safe disconnect
+      }
+    });
+    this.activeOscillators = [];
     this.isMuted = isMutedInitial;
 
     try {
@@ -54,8 +88,15 @@ class CelebrationAudioEngine {
         (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (!AudioCtx) return;
 
-      const ctx = new AudioCtx();
-      this.ctx = ctx;
+      // Reuse existing unlocked context if available, or initialize a new one
+      let ctx = this.ctx;
+      if (!ctx || ctx.state === 'closed') {
+        ctx = new AudioCtx();
+        this.ctx = ctx;
+      }
+      if (ctx.state === 'suspended') {
+        ctx.resume().catch(() => {});
+      }
 
       const master = ctx.createGain();
       master.gain.setValueAtTime(this.isMuted ? 0 : 0.75, ctx.currentTime);

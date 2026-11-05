@@ -9,6 +9,11 @@ import { OrnateGoldenKnife, CuttingGuide3D } from './OreoCake3D';
 // Interactive 3D Birthday Cake Powered by Imported GLB Models
 // Supports seamless pre-cut intact state and post-cut wedge separation
 // -------------------------------------------------------------
+
+// Preload both GLB models immediately so assets are cached prior to scene entry
+useLoader.preload(GLTFLoader, `${import.meta.env.BASE_URL}models/birthday_cake_intact.glb`);
+useLoader.preload(GLTFLoader, `${import.meta.env.BASE_URL}models/birthday_cake_cut.glb`);
+
 export const GLBCake3D: React.FC<OreoCake3DProps> = ({
   candle1Lit,
   candle2Lit,
