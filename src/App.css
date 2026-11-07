@@ -518,7 +518,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: clamp(55px, 12.5vh, 114px) 20px 24px 20px;
+  padding: clamp(105px, 20.5vh, 215px) 20px 24px 20px;
   pointer-events: none;
   z-index: 20;
 }
@@ -791,7 +791,7 @@
 
 @media (max-width: 480px) {
   .garden-entrance-hud {
-    padding: clamp(85px, 14.5vh, 130px) 16px 24px 16px;
+    padding: clamp(95px, 17.5vh, 155px) 16px 24px 16px;
   }
 
   .garden-landing-container {
