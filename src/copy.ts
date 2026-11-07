@@ -161,8 +161,8 @@ export const CAKE_COPY = {
   micDisclaimer: "Audio is analyzed locally for breath and never recorded.",
   cutPrompt: "Drag along the guide to make the first cut.",
   cutSuccess: "And that concludes the most unnecessarily elaborate cake-cutting ceremony in internet history.",
-  bridgeStandard: "And now, Faara, something I really want you to know.",
-  bridgeAlternate: "And now, Faara, something I really want you to know.",
+  bridgeStandard: "Before you go, there's one more thing I'd like you to read.",
+  bridgeAlternate: "Before you go, there's one more thing I'd like you to read.",
   bridgeButton: "Read my message →",
 } as const;
 
